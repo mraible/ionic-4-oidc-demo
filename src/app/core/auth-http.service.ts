@@ -1,6 +1,6 @@
 import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
-import { TokenResponse, Requestor } from '@openid/appauth';
+import { Requestor, TokenResponse } from '@openid/appauth';
 
 import { AuthService } from './auth.service';
 import { CordovaRequestor } from 'ionic-appauth/lib/cordova';
@@ -11,33 +11,33 @@ import { RequestorService } from './angular/requestor.service';
 })
 export class AuthHttpService {
 
-  requestor : Requestor;
+  requestor: Requestor;
 
   constructor(
-    angularRequestor : RequestorService,
-    cordovaRequestor : CordovaRequestor,
-    platform : Platform,
-    private auth : AuthService
-    ) {
-      this.requestor = platform.is("cordova") ? cordovaRequestor : angularRequestor;
+    angularRequestor: RequestorService,
+    cordovaRequestor: CordovaRequestor,
+    platform: Platform,
+    private auth: AuthService
+  ) {
+    this.requestor = platform.is('cordova') ? cordovaRequestor : angularRequestor;
 
-    }
+  }
 
-  public async request<T> (method: "GET" | "POST" | "PUT" | "DELETE", url: string, body?: any){
-    let token : TokenResponse = await this.auth.getValidToken();
+  public async request<T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, body?: any) {
+    const token: TokenResponse = await this.auth.getValidToken();
     return this.requestor.xhr<T>({
       url: url,
       method: method,
       data: JSON.stringify(body),
       headers: this.addHeaders(token)
     });
-  } 
+  }
 
   private addHeaders(token) {
-      return (token) ? {
-                  "Authorization": `${token.tokenType} ${token.accessToken}`,
-                  "Content-Type": "application/json"
-              } : {};
+    return (token) ? {
+      'Authorization': `${token.tokenType} ${token.accessToken}`,
+      'Content-Type': 'application/json'
+    } : {};
 
-  }   
+  }
 }

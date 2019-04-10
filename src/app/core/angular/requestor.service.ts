@@ -6,23 +6,25 @@ import { XhrSettings } from 'ionic-appauth/lib/cordova';
 @Injectable({
   providedIn: 'root'
 })
-export class RequestorService implements Requestor{
+export class RequestorService implements Requestor {
 
-  constructor(private http : HttpClient){}
+  constructor(private http: HttpClient) {
+  }
 
-  public async xhr<T>(settings: XhrSettings) : Promise<T> {
-    if(!settings.method)   
-        settings.method = "GET";
+  public async xhr<T>(settings: XhrSettings): Promise<T> {
+    if (!settings.method) {
+      settings.method = 'GET';
+    }
 
-    switch(settings.method){
-        case "GET":
-            return this.http.get<T>(settings.url, { headers : settings.headers }).toPromise();
-        case "POST":
-            return this.http.post<T>(settings.url, settings.data, { headers : settings.headers }).toPromise();
-        case "PUT":
-            return this.http.put<T>(settings.url, settings.data, { headers : settings.headers }).toPromise();
-        case "DELETE":
-            return this.http.delete<T>(settings.url, { headers : settings.headers }).toPromise();
+    switch (settings.method) {
+      case 'GET':
+        return this.http.get<T>(settings.url, {headers: settings.headers}).toPromise();
+      case 'POST':
+        return this.http.post<T>(settings.url, settings.data, {headers: settings.headers}).toPromise();
+      case 'PUT':
+        return this.http.put<T>(settings.url, settings.data, {headers: settings.headers}).toPromise();
+      case 'DELETE':
+        return this.http.delete<T>(settings.url, {headers: settings.headers}).toPromise();
     }
   }
 }

@@ -1,79 +1,71 @@
 import { Platform } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
 
-import { IonicAuth, IonicAuthorizationRequestHandler, DefaultBrowser} from 'ionic-appauth';
-import { CordovaRequestorService } from './cordova/cordova-requestor.service';
-import { BrowserService } from './cordova/browser.service';
-import { SecureStorageService } from './cordova/secure-storage.service';
+import { IonicAuth } from 'ionic-appauth';
 import { StorageService } from './angular/storage.service';
 import { RequestorService } from './angular/requestor.service';
-import { IonicImplicitRequestHandler } from 'ionic-appauth/lib/implicit-request-handler';
+import { CordovaBrowser, CordovaRequestor, CordovaSecureStorage } from 'ionic-appauth/lib/cordova';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends IonicAuth  {
+export class AuthService extends IonicAuth {
 
-  constructor(
-    requestor : RequestorService,
-    cordovaRequestor : CordovaRequestorService,
-    secureStorage : SecureStorageService,
-    storage : StorageService,
-    browser : BrowserService,
-    private platform : Platform,
-    private ngZone: NgZone,
-  ){
-    super(
-      (platform.is('cordova')) ? browser : undefined,
-      (platform.is('cordova')) ? secureStorage : storage,
-      (platform.is('cordova')) ? cordovaRequestor : requestor,
-      undefined, undefined,
-      (platform.is('cordova')) ? new IonicAuthorizationRequestHandler(browser, secureStorage) : new IonicImplicitRequestHandler(new DefaultBrowser(), storage)
-    );
+  constructor(requestor: RequestorService, storage: StorageService,
+              private platform: Platform, private ngZone: NgZone) {
+    super((platform.is('cordova')) ? new CordovaBrowser() : undefined,
+      (platform.is('cordova')) ? new CordovaSecureStorage() : storage,
+      (platform.is('cordova')) ? new CordovaRequestor() : requestor);
 
     this.addConfig();
   }
 
   public async startUpAsync() {
-    if(this.platform.is("cordova")){
-      (<any>window).handleOpenURL = (callbackUrl) => {  
+    if (this.platform.is('cordova')) {
+      (<any>window).handleOpenURL = (callbackUrl) => {
         this.ngZone.run(() => {
-            this.handleCallback(callbackUrl);
+          this.handleCallback(callbackUrl);
         });
       };
     }
-    
+
     super.startUpAsync();
   }
 
-  private addConfig(){
-    if(this.platform.is("cordova")){
-      this.authConfig = { 
-        identity_client: 'appAuthCode', 
-        identity_server: 'https://192.68.0.1/', 
-        redirect_url: 'appauth://callback', 
-        scopes: 'openid profile offline_access',
-        usePkce: true, 
-        end_session_redirect_url: 'appauth://endSession', 
-      }
-    }else{
-      this.authConfig = { 
-        identity_client: 'appAuthImplicit', 
-        identity_server: 'https://dev-197427.okta.com/oauth2/default', 
-        redirect_url: 'http://localhost:8100/implicit/authcallback', 
-        scopes: 'openid profile offline_access',
-        usePkce: false,
-        end_session_redirect_url: 'http://localhost:8100/implicit/endsession', 
-      }
+  private addConfig() {
+    const clientId = '0oak8elkkxfdVahEl0h7';
+    const issuer = 'https://dev-737523.oktapreview.com/oauth2/default';
+    const scopes = 'openid profile offline_access';
+
+    if (this.platform.is('cordova')) {
+      this.authConfig = {
+        identity_client: clientId,
+        identity_server: issuer,
+        redirect_url: 'com.okta.dev-133320:/callback',
+        scopes: scopes,
+        usePkce: true,
+        end_session_redirect_url: 'com.okta.dev-133320:/logout',
+      };
+    } else {
+      this.authConfig = {
+        identity_client: clientId,
+        identity_server: issuer,
+        redirect_url: 'http://localhost:8100/implicit/callback',
+        scopes: scopes,
+        usePkce: true,
+        response_type: 'code',
+        end_session_redirect_url: 'http://localhost:8100/implicit/logout',
+      };
     }
   }
 
   private handleCallback(callbackUrl: string): void {
-    if ((callbackUrl).indexOf(this.authConfig.redirect_url) === 0){
+    if ((callbackUrl).indexOf(this.authConfig.redirect_url) === 0) {
+      // todo: don't ignore promise or refactor
       this.AuthorizationCallBack(callbackUrl);
     }
-    
-    if ((callbackUrl).indexOf(this.authConfig.end_session_redirect_url) === 0){
+
+    if ((callbackUrl).indexOf(this.authConfig.end_session_redirect_url) === 0) {
       this.EndSessionCallBack();
     }
   }

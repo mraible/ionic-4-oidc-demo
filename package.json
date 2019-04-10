@@ -31,6 +31,7 @@
     "@ionic/storage": "^2.2.0",
     "ajv": "^6.10.0",
     "cordova-android": "7.1.4",
+    "cordova-ios": "5.0.0",
     "cordova-plugin-advanced-http": "^2.0.7",
     "cordova-plugin-customurlscheme": "^4.4.0",
     "cordova-plugin-device": "^2.0.2",
@@ -82,7 +83,7 @@
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-secure-storage": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "appauth",
+        "URL_SCHEME": "com.okta.dev-133320",
         "ANDROID_SCHEME": " ",
         "ANDROID_HOST": " ",
         "ANDROID_PATHPREFIX": "/"
@@ -97,7 +98,8 @@
       "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

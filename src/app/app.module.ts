@@ -16,7 +16,7 @@ import { CoreModule } from './core/core.module';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     HttpClientModule,

@@ -86,7 +86,7 @@
     <plugin name="cordova-plugin-inappbrowser" spec="https://github.com/Onegini/cordova-plugin-inappbrowser.git" />
     <plugin name="cordova-plugin-secure-storage" spec="3.0.1" />
     <plugin name="cordova-plugin-customurlscheme" spec="4.4.0">
-        <variable name="URL_SCHEME" value="myAuthApp" />
+        <variable name="URL_SCHEME" value="appauth" />
     </plugin>
     <plugin name="cordova-plugin-advanced-http" spec="^2.0.7" />
     <engine name="android" spec="7.1.4" />

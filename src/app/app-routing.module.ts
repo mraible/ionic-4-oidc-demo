@@ -6,6 +6,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', canActivate: [AuthGuardService], loadChildren: './home/home.module#HomePageModule' },
   { path: 'landing', loadChildren: './landing/landing.module#LandingPageModule' },
+  { path: 'implicit/authcallback', loadChildren: './implicit/auth-callback/auth-callback.module#AuthCallbackPageModule' },
+  { path: 'implicit/endsession', loadChildren: './implicit/end-session/end-session.module#EndSessionPageModule' },
 ];
 
 @NgModule({

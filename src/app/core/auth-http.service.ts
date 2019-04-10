@@ -1,27 +1,36 @@
+import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
-import { TokenResponse } from '@openid/appauth';
+import { TokenResponse, Requestor } from '@openid/appauth';
 
-import { RequestorService } from './cordova/requestor.service';
 import { AuthService } from './auth.service';
+import { CordovaRequestor } from 'ionic-appauth/lib/cordova';
+import { RequestorService } from './angular/requestor.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthHttpService {
 
+  requestor : Requestor;
+
   constructor(
-    private requestor : RequestorService,
+    angularRequestor : RequestorService,
+    cordovaRequestor : CordovaRequestor,
+    platform : Platform,
     private auth : AuthService
-    ) {}
+    ) {
+      this.requestor = platform.is("cordova") ? cordovaRequestor : angularRequestor;
+
+    }
 
   public async request<T> (method: "GET" | "POST" | "PUT" | "DELETE", url: string, body?: any){
     let token : TokenResponse = await this.auth.getValidToken();
     return this.requestor.xhr<T>({
-                                url: url,
-                                method: method,
-                                data: JSON.stringify(body),
-                                headers: this.addHeaders(token)
-                            });
+      url: url,
+      method: method,
+      data: JSON.stringify(body),
+      headers: this.addHeaders(token)
+    });
   } 
 
   private addHeaders(token) {

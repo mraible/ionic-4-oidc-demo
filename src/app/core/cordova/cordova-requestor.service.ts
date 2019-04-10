@@ -4,5 +4,5 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class RequestorService extends CordovaRequestor {
+export class CordovaRequestorService extends CordovaRequestor {
 }

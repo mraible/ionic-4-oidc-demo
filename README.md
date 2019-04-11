@@ -32,7 +32,7 @@ Give your app a memorable name, and configure it as follows:
  
 * Login redirect URIs: 
   * `http://localhost:8100/implicit/callback`
-  * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta URL).
+  * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta URL)
 * Grant type allowed: **Authorization Code**
 * Click **Done**
 * Click **Edit** and add Logout redirect URIs:
@@ -64,11 +64,15 @@ private addConfig() {
 
 **NOTE:** The value of `{yourOktaDomain}` should be something like `dev-123456.okta.com`. Make sure you don't include `-admin` in the value!
 
-After modifying this file, start Ionic 4 app and you should be able to authenticate with Okta.
+After modifying this file, start the app and you should be able to authenticate with Okta.
+
+```
+ionic serve
+```
 
 ## iOS
 
-I was able to deploy this app to iOS Simulator using:
+You can deploy this app to iOS Simulator using:
 
 ```shell
 ionic cordova run ios -l

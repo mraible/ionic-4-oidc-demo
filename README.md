@@ -111,7 +111,13 @@ See <https://ionicframework.com/docs/building/ios> for more information.
 
 ## Android
 
-I was unable to get this app working on Android. If you succeed, please create a PR and update this file with instructions!
+You can deploy this app to an AVD (Android Virtual Device) using:
+
+```shell
+ionic cordova run android -l
+```
+
+**NOTE:** You will need to create an AVD using Android Studio first.
 
 ## Links
 

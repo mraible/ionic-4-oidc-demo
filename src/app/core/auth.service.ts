@@ -33,7 +33,7 @@ export class AuthService extends IonicAuth {
   }
 
   private addConfig() {
-    const clientId = '0oak8elkkxfdVahEl0h7';
+    const clientId = '0oak8qpmhim2MmwF20h7';
     const issuer = 'https://dev-737523.oktapreview.com/oauth2/default';
     const scopes = 'openid profile offline_access';
 
@@ -41,10 +41,10 @@ export class AuthService extends IonicAuth {
       this.authConfig = {
         identity_client: clientId,
         identity_server: issuer,
-        redirect_url: 'com.okta.dev-133320:/callback',
+        redirect_url: 'com.oktapreview.dev-737523:/callback',
         scopes: scopes,
         usePkce: true,
-        end_session_redirect_url: 'com.okta.dev-133320:/logout',
+        end_session_redirect_url: 'com.oktapreview.dev-737523:/logout',
       };
     } else {
       this.authConfig = {

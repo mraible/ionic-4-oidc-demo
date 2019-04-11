@@ -9,8 +9,9 @@ npm i -g ionic
 ```
 
 * [Getting Started](#getting-started)
-* [iOS](#ios)
-* [Android](#android)
+* [Configure for Mobile](#mobile)
+  * [iOS](#ios)
+  * [Android](#android)
 * [Links](#links)
 * [Help](#help)
 * [License](#license)
@@ -72,6 +73,24 @@ After modifying this file, start the app and you should be able to authenticate 
 ionic serve
 ```
 
+## Mobile
+
+If you'd like to run this app on a mobile emulator or device, you'll need to modify `package.json` to use your reversed Okta domain. 
+
+```xml
+"cordova": {
+  "plugins": {
+    ...
+    "cordova-plugin-customurlscheme": {
+      "URL_SCHEME": "com.oktapreview.dev-737523",
+      ...
+    },
+  }
+}
+```
+
+This configures the [Custom URL scheme](https://github.com/EddyVerbruggen/Custom-URL-scheme) Cordova plugin so redirects back to your app will work.
+
 ## iOS
 
 You can deploy this app to iOS Simulator using:
@@ -80,27 +99,13 @@ You can deploy this app to iOS Simulator using:
 ionic cordova run ios -l
 ```
 
-Once `platform/ios` has been generated, modify `platforms/ios/MyApp/MyApp-Info.plist` and add your reversed Okta domain.
-
-```xml
-<key>CFBundleURLTypes</key>
-<array>
-  <dict>
-    <key>CFBundleURLSchemes</key>
-    <array>
-      <string>com.okta.dev-737523</string>
-    </array>
-  </dict>
-</array>
-```
-
 Then, in another terminal:
 
 ```
 open platforms/ios/MyApp.xcworkspace
 ```
 
-Then run the app from Xcode.
+Configure signing in Xcode, then run the app.
 
 See <https://ionicframework.com/docs/building/ios> for more information.
 

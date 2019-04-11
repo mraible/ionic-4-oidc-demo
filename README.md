@@ -9,6 +9,8 @@ npm i -g ionic
 ```
 
 * [Getting Started](#getting-started)
+* [iOS](#ios)
+* [Android](#android)
 * [Links](#links)
 * [Help](#help)
 * [License](#license)

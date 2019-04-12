@@ -8,9 +8,10 @@ import { NavController } from '@ionic/angular';
 export class EndSessionPage implements OnInit {
 
   constructor(
-    private authService : AuthService,
+    private authService: AuthService,
     private navCtrl: NavController,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.authService.EndSessionCallBack();

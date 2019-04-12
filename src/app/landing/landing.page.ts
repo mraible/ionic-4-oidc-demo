@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
-import { IAuthAction, AuthActions } from 'ionic-appauth';
+import { AuthActions, IAuthAction } from 'ionic-appauth';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -9,23 +9,21 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
-  action : IAuthAction;
+  action: IAuthAction;
 
-  constructor(
-    private auth : AuthService,
-    private navCtrl : NavController
-  ) { }
+  constructor(private auth: AuthService, private navCtrl: NavController) {
+  }
 
   ngOnInit() {
     this.auth.authObservable.subscribe((action) => {
-      this.action = action
-      if(action.action == AuthActions.SignInSuccess){
+      this.action = action;
+      if (action.action === AuthActions.SignInSuccess) {
         this.navCtrl.navigateRoot('home');
       }
     });
   }
 
-  signIn(){
+  signIn() {
     this.auth.signIn();
   }
 }

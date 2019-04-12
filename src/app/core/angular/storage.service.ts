@@ -7,12 +7,13 @@ import { Storage } from '@ionic/storage';
 })
 export class StorageService implements StorageBackend {
 
-  constructor(private storage: Storage){}
+  constructor(private storage: Storage) {
+  }
 
   getItem(name: string): Promise<string> {
     return this.storage.get(name);
-  }  
-  
+  }
+
   removeItem(name: string): Promise<void> {
     return this.storage.remove(name);
   }

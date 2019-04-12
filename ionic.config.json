@@ -1,7 +1,8 @@
 {
   "name": "ionic-appaut-ng-demo",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

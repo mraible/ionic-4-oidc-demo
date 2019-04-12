@@ -1,5 +1,5 @@
 import { AuthService } from './core/auth.service';
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -14,7 +14,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private auth : AuthService,
+    private auth: AuthService
   ) {
     this.initializeApp();
   }
@@ -23,7 +23,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.auth.startUpAsync();
       this.statusBar.styleDefault();
-      this.splashScreen.hide();     
+      this.splashScreen.hide();
     });
   }
 }

@@ -61,12 +61,15 @@ export class AuthService extends IonicAuth {
 
   private handleCallback(callbackUrl: string): void {
     if ((callbackUrl).indexOf(this.authConfig.redirect_url) === 0) {
+      console.log('Login Callback received ' + callbackUrl);
       // todo: don't ignore promise or refactor
       this.AuthorizationCallBack(callbackUrl);
+    } else if ((callbackUrl).indexOf(this.authConfig.end_session_redirect_url) === 0) {
+      console.log('Logout Callback received ' + callbackUrl);
+      this.EndSessionCallBack();
+    } else {
+      console.log('Unrecognized Callback received ' + callbackUrl);
     }
 
-    if ((callbackUrl).indexOf(this.authConfig.end_session_redirect_url) === 0) {
-      this.EndSessionCallBack();
-    }
   }
 }
